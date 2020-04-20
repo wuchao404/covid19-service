@@ -1,4 +1,11 @@
 # Logs
+
+.idea
+.idea/*
+*.iml
+*/*.iml
+target
+
 logs
 *.log
 npm-debug.log*

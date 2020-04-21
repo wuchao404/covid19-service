@@ -13,7 +13,7 @@ public class UserController {
     public IUserService userService;
 
     @GetMapping("/user")
-    public UserEntity getUser(@RequestParam() String username) {
+    public UserEntity getUser(@RequestParam(value = "username", defaultValue = "yangshuai") String username) {
         return userService.getUser(username);
     }
 }

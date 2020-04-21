@@ -2,6 +2,7 @@ package org.open.covid19;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author heshiyuan
@@ -11,5 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Covid19Application {
     public static void main(String[] args) {
         new SpringApplication(Covid19Application.class).run();
+    }
+
+    @RequestMapping("/sss")
+    public String getMsg() {
+        return "ok";
     }
 }

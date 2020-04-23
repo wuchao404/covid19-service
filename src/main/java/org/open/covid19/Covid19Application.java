@@ -14,9 +14,4 @@ public class Covid19Application {
     public static void main(String[] args) {
         new SpringApplication(Covid19Application.class).run();
     }
-
-    @RequestMapping("/sss")
-    public String getMsg() {
-        return "ok";
-    }
 }

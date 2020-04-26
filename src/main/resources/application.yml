@@ -6,6 +6,7 @@ spring:
     username: admin
     password: 123456
   jackson:
+    default-property-inclusion: non_empty
 
 mybatis:
   mapperLocations: classpath*:mapper/*.xml
@@ -17,7 +18,3 @@ logging:
     org.open.covid19: DEBUG
 
 
-spring:
-  jackson:
-    time-zone: GMT+8
-    default-property-inclusion: non_null

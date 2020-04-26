@@ -15,6 +15,7 @@ public class UserServiceImpl implements IUserService {
     public UserMapper userMapper;
     @Override
     public UserEntity getUser(String username) {
+
         return userMapper.getUser(username);
     }
 }

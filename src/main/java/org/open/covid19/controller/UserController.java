@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.Covid19Api;
 import org.open.covid19.entity.Country;
 import org.open.covid19.entity.UserEntity;
+import org.open.covid19.service.ISetCountries;
 import org.open.covid19.service.IUserService;
 import org.open.covid19.utils.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserController {
     @Autowired
     public IUserService userService;
     @Autowired
-    private Covid19Api covid19Api;
+    private ISetCountries setCountries;
 
     @GetMapping("/user")
     @Deprecated
@@ -32,8 +33,7 @@ public class UserController {
     @SneakyThrows
     @GetMapping("/set-country")
     public BaseResponse setCountries() {
-        List<Country> countries = covid19Api.getCountries();
-        log.debug("countries[0]:{}", countries.get(0));
-        return BaseResponse.success200(countries);
+//        boolean success = setCountries.setAll();
+        return true ? BaseResponse.SUCCESS : BaseResponse.FAILURE;
     }
 }

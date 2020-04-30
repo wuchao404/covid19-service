@@ -1,5 +1,7 @@
 # covid19-service
 收集全球新冠肺炎数据，提供api接口支持
+- [产品原型文档](https://free.modao.cc/app/753744fc844134a644cfc7c6f689b8e146e4fd14?simulator_type=device&sticky)
+
 
 # COVID-19专业术语
 汉语 | 英语 | 备注

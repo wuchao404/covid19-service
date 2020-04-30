@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.open.covid19.mapper.Covid19ApiMapper">
+    <select id="selectCountryId" parameterType="java.lang.String" resultType="java.lang.Long">
+         select id from management.covid19_countries where iso2='#{iso2}'
+    </select>
+
+    <insert id="setCasesList2country" parameterType="map">
+        insert into management.covid19_cases (
+            total_cases,total_death,total_recovered,country_id,statistic_date
+        ) values
+        <foreach collection="cases" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.totalCase},
+                #{item.totalDeath}
+                #{item.totalRecovered},
+                #{countryId}
+                #{item.date}
+            </trim>
+        </foreach>
+    </insert>
+</mapper>

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.Covid19Api;
 import org.open.covid19.entity.Country;
 import org.open.covid19.entity.UserEntity;
+import org.open.covid19.service.ICovid19Api;
 import org.open.covid19.service.ISetCountries;
 import org.open.covid19.service.IUserService;
 import org.open.covid19.utils.BaseResponse;
@@ -23,6 +24,9 @@ public class UserController {
     public IUserService userService;
     @Autowired
     private ISetCountries setCountries;
+    @Autowired
+    private ICovid19Api iCovid19Api;
+
 
     @GetMapping("/user")
     @Deprecated
@@ -31,9 +35,9 @@ public class UserController {
         return user == null ? BaseResponse.FAILURE : BaseResponse.success200(user);
     }
     @SneakyThrows
-    @GetMapping("/set-country")
+    @GetMapping("/test")
     public BaseResponse setCountries() {
-//        boolean success = setCountries.setAll();
-        return true ? BaseResponse.SUCCESS : BaseResponse.FAILURE;
+        int result = iCovid19Api.insertCasesByIso2("cn");
+        return result > 0 ? BaseResponse.SUCCESS : BaseResponse.FAILURE;
     }
 }

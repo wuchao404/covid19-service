@@ -3,6 +3,7 @@ package org.open.covid19.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.open.covid19.entity.Case;
+import org.open.covid19.entity.Country;
 
 import java.util.List;
 @Mapper
@@ -20,4 +21,9 @@ public interface Covid19ApiMapper {
      * @return
      */
     long selectCountryId(String iso2);
+    /**
+     * 国家列表
+     * @return
+     */
+    List<Country> getCountryList();
 }

@@ -25,6 +25,5 @@ public class Case {
     private String country;
 
     @JsonProperty("Date")
-    @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private Date date;
 }

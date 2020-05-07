@@ -7,15 +7,13 @@ import java.util.List;
 
 public interface ICovid19ApiService {
     /**
-     * 向某个国家插入确诊数据
-     * @param iso2
-     * @return
-     */
-    int insertCasesByIso2(String iso2);
-
-    /**
      * 插入所有确诊数据
      */
     void insertAllCases();
+
+    /**
+     * 从某个日期之后，插入病例数据
+     */
+    void insertCasesFromDate();
 
 }

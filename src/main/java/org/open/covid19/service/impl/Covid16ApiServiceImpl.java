@@ -6,6 +6,7 @@ import org.open.covid19.entity.Case;
 import org.open.covid19.entity.Country;
 import org.open.covid19.mapper.Covid19ApiMapper;
 import org.open.covid19.service.ICovid19ApiService;
+import org.open.covid19.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,14 +21,15 @@ public class Covid16ApiServiceImpl implements ICovid19ApiService {
     private Covid19ApiMapper covid19ApiMapper;
     @Autowired
     private Covid19Api covid19Api;
+    @Autowired
+    private Helper helper;
 
-    @Override
     @Async
-    public int insertCasesByIso2(String iso2) {
+    int insertCasesByIso2(String iso2, boolean isFromDate) {
         int result = 0;
         long id = covid19ApiMapper.selectCountryId(iso2);
         // 某国确诊数目
-        List<Case> cases =covid19Api.getCases(iso2);
+        List<Case> cases =isFromDate ? covid19Api.getCasesZFromDate(iso2, DateUtil.local2tz("2020-05-06")) : covid19Api.getCases(iso2);
         log.debug("该国家确诊数量:{}",cases.size());
         // 入库
         if (null != cases && cases.size() > 0) {
@@ -39,15 +41,23 @@ public class Covid16ApiServiceImpl implements ICovid19ApiService {
         return result;
     }
 
-    @Override
-    public void insertAllCases() {
+    void insertCases(final boolean isFromDate) {
         List<Country> countryList = covid19ApiMapper.getCountryList();
         if (null == countryList || countryList.size() <= 0) {
             return;
         }
         countryList.forEach(country -> {
-            this.insertCasesByIso2(country.getIso2());
+            helper.insertCasesByIso2(country.getSlug(),isFromDate);
         });
+    }
+    @Override
+    public void insertAllCases() {
+        insertCases(false);
+    }
+
+    @Override
+    public void insertCasesFromDate() {
+        insertCases(true);
     }
 
 }

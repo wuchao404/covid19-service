@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface Covid19ApiMapper {
     /**
-     * 设置某个国家的确诊数据（全部日期）
+     * 设置某个国家的确诊数据
      * @param cases
      * @return
      */
@@ -17,13 +17,20 @@ public interface Covid19ApiMapper {
 
     /**
      * 根据简称查询id
-     * @param iso2
+     * @param slug
      * @return
      */
-    long selectCountryId(String iso2);
+    long selectCountryId(String slug);
     /**
      * 国家列表
      * @return
      */
     List<Country> getCountryList();
+
+    /**
+     * 全球病例总数（确诊、治愈、死亡）
+     * @return
+     */
+    long getGlobalCaseCount();
+
 }

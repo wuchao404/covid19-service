@@ -24,9 +24,21 @@ public interface Covid19Api {
 
     /**
      * 根据国家获取确诊数
-     * @param iso2  国家缩写
+     * @param slug  国家缩写
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/total/dayone/country/{iso2}")
-    List<Case> getCases(@PathVariable("iso2") String iso2);
+    @RequestMapping(method = RequestMethod.GET, value = "/total/dayone/country/{slug}")
+    List<Case> getCases(@PathVariable("slug") String slug);
+
+    /**
+     * 从某天开始，统计后面每天的病例数
+     * @param slug          国家
+     * @param fromDate      开始日期
+     * @return
+     */
+    @RequestMapping(
+            method = RequestMethod.GET,
+            value = "/live/country/{slug}/status/confirmed/date/{fromDate}"
+    )
+    List<Case> getCasesZFromDate(@PathVariable("slug") String slug, @PathVariable("fromDate") String fromDate);
 }

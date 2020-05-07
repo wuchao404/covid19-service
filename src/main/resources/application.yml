@@ -14,10 +14,9 @@ spring:
 mybatis:
   mapperLocations: classpath*:mapper/*.xml
 
-
 logging:
-  level:
-    root: INFO
-    org.open.covid19: DEBUG
+  config: classpath:logback.xml
+
+
 
 

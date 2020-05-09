@@ -24,23 +24,6 @@ public class Covid16ApiServiceImpl implements ICovid19ApiService {
     @Autowired
     private Helper helper;
 
-    @Async
-    int insertCasesByIso2(String iso2, boolean isFromDate) {
-        int result = 0;
-        long id = covid19ApiMapper.selectCountryId(iso2);
-        // 某国确诊数目
-        List<Case> cases =isFromDate ? covid19Api.getCasesZFromDate(iso2, DateUtil.local2tz("2020-05-06")) : covid19Api.getCases(iso2);
-        log.debug("该国家确诊数量:{}",cases.size());
-        // 入库
-        if (null != cases && cases.size() > 0) {
-            result = covid19ApiMapper.setCasesList2country(id, cases);
-        }
-        if (result > 0) {
-            log.debug("数据插入成功：{}","iso2:" + iso2);
-        }
-        return result;
-    }
-
     void insertCases(final boolean isFromDate) {
         List<Country> countryList = covid19ApiMapper.getCountryList();
         if (null == countryList || countryList.size() <= 0) {

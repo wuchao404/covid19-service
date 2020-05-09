@@ -1,5 +1,7 @@
 package org.open.covid19.api;
 
+import org.open.covid19.api.config.Covid19Config;
+import org.open.covid19.api.fallback.Covid19ApiFallback;
 import org.open.covid19.entity.Case;
 import org.open.covid19.entity.Country;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,7 +15,12 @@ import java.util.List;
 /**
  * 调用网站接口
  */
-@FeignClient(name = "covid19api",url = "https://api.covid19api.com")
+@FeignClient(
+        name = "covid19api",
+        url = "https://api.covid19api.com",
+        fallbackFactory = Covid19ApiFallback.class,
+        configuration = Covid19Config.class
+)
 public interface Covid19Api {
     /**
      * 国家列表

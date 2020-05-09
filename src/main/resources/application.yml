@@ -8,14 +8,29 @@ spring:
   jackson:
     default-property-inclusion: non_empty
 
-
-
-
 mybatis:
   mapperLocations: classpath*:mapper/*.xml
 
 logging:
   config: classpath:logback.xml
+
+feign:
+  httpclient:
+    connection-timeout: 2000000
+  hystrix:
+    command:
+      default:
+        execution:
+          isolation:
+            strategy: SEMAPHORE
+  client:
+    config:
+      default:
+        connectTimeout: 20000
+        readTimeout: 5000
+        loggerLevel: none
+
+
 
 
 

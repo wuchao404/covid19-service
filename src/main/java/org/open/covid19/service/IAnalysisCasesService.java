@@ -3,6 +3,7 @@ package org.open.covid19.service;
 import org.open.covid19.entity.Case;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分析确诊数据
@@ -10,23 +11,12 @@ import java.util.List;
  */
 public interface IAnalysisCasesService {
     /**
-     * 查询某个国家的记录详情的数量(详情以天为单位)
-     * @param iso2
-     * @return
+     * 将记录数量插入国家表中（每天为1个记录数）
+     * @param
+     * @return 插入失败的数据
      */
-    int getCasesSizeByCountry(String iso2);
+    List<Map<String, Integer>> updateRecordSize2Country();
 
-    /**
-     * 查询某个国家的病例总数
-     * @param countryId
-     * @return
-     */
-    long getTotalCaseByCountryId(int countryId);
-
-    /**
-     * 将总病例数插入到数据库
-     * @param cases
-     * @return
-     */
-    int insertAllTotalCase(List<Case> cases);
+    int updateRecordOptimizer();
+    int updateBeginEnd();
 }

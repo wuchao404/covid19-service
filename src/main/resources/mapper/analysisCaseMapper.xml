@@ -4,7 +4,31 @@
     <select id="getCasesSizeByCountry" parameterType="int" resultType="java.lang.Integer">
         select count(id) as length from management.covid19_cases where country_id=#{id}
     </select>
-    <select id="getTotalCaseByCountryId" parameterType="int" resultType="java.lang.Long">
-        select
+
+    <update id="updateRecordCountById" parameterType="map">
+        update management.covid19_countries set record_count=#{count} where id=#{countryId};
+    </update>
+
+    <select id="getAllRecords" resultType="org.open.covid19.entity.Country">
+        select country_id as id, count(id) as recordCount from management.covid19_cases group by country_id;
     </select>
+
+    <update id="updateAllRecords" parameterType="list">
+        update management.covid19_countries
+            set record_count = case id
+                <foreach collection="list" item="item" index="index">
+                    <trim prefix=" " suffix=" ">
+                        when #{item.id} then #{item.recordCount}
+                    </trim>
+                </foreach>
+            end;
+    </update>
+<!--    此sql有语法错误，搞不明白-->
+    <update id="updateRecordWithBeginEnd" parameterType="list">
+        begin
+            <foreach collection="list" item="item" index="index">
+                update management.covid19_countries set record_count=${item.recordCount} where id=#{item.id};
+            </foreach>
+        end;
+    </update>
 </mapper>

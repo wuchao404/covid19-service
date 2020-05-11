@@ -16,4 +16,10 @@ public interface ResetCountries {
      * @param countries
      */
     int setAll(List<Country> countries);
+
+    /**
+     * 国家列表
+     * @return
+     */
+    List<Country> getAll();
 }

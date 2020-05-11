@@ -26,6 +26,6 @@ public class Case {
     private String country;
 
     @JsonProperty("Date")
-    @JsonFormat(pattern = "YYYY-MM-DD", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date date;
 }

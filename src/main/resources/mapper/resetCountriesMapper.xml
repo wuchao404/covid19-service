@@ -12,4 +12,8 @@
         </foreach>
     </insert>
 
+    <select id="getAll" resultType="org.open.covid19.entity.Country">
+        select id,country,slug,iso2 from management.covid19_countries
+    </select>
+
 </mapper>

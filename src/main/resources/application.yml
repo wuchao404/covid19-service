@@ -23,6 +23,10 @@ feign:
         execution:
           isolation:
             strategy: SEMAPHORE
+#    threadpool:
+#      default:
+#        coreSize: 10 #并发执行的最大线程数，默认10
+#        maxQueueSize: 1000 #BlockingQueue的最大队列数，默认值-1
   client:
     config:
       default:

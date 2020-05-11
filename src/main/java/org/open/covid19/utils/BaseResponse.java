@@ -39,4 +39,13 @@ public class BaseResponse {
     public static BaseResponse success200(Object data) {
         return new BaseResponse(BaseStatusEnum.SUCCESS.getStatus(),BaseStatusEnum.SUCCESS.getMessage(),data);
     }
+
+    /**
+     * 失败
+     * @param data
+     * @return
+     */
+    public static BaseResponse failure400(Object data) {
+        return new BaseResponse(BaseStatusEnum.FAILURE.getStatus(),"有入库失败的数据",data);
+    }
 }

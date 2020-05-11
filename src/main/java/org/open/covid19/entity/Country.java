@@ -14,4 +14,5 @@ public class Country {
     private String slug;
     @JsonProperty("ISO2")
     private String iso2;
+    private int recordCount;
 }

@@ -1,5 +1,6 @@
 package org.open.covid19.controller;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.entity.UserEntity;
 import org.open.covid19.service.IAnalysisCasesService;
@@ -7,12 +8,15 @@ import org.open.covid19.service.ICovid19ApiService;
 import org.open.covid19.service.ISetCountries;
 import org.open.covid19.service.IUserService;
 import org.open.covid19.utils.BaseResponse;
+import org.open.covid19.utils.file.MultipartFileToFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -63,5 +67,20 @@ public class UserController {
         long end = System.currentTimeMillis();
         log.debug("/beginend时间差:{}",end - start);
         return result > 0 ? BaseResponse.SUCCESS : BaseResponse.FAILURE;
+    }
+
+    /**
+     * 上传Excel文件，添加国家中英文对照
+     * @param multipartFile
+     * @return
+     */
+    @SneakyThrows
+    @PostMapping("/excel")
+    public BaseResponse uploadExcel(@RequestParam("file") MultipartFile multipartFile){
+        log.debug("接收文件:{}",multipartFile.getName());
+        File file = MultipartFileToFile.toFile(multipartFile);
+        setCountries.readCnNameFromExcel(file);
+        MultipartFileToFile.delteTempFile(file);
+        return BaseResponse.SUCCESS;
     }
 }

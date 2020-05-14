@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.entity.Country;
 import org.open.covid19.mapper.AnalysisCaseMapper;
-import org.open.covid19.mapper.ResetCountries;
+import org.open.covid19.mapper.CountriesMapper;
 import org.open.covid19.service.IAnalysisCasesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +19,11 @@ public class AnalysisCaseImpl implements IAnalysisCasesService{
     @Autowired
     AnalysisCaseMapper analysisCaseMapper;
     @Autowired
-    ResetCountries resetCountries;
+    CountriesMapper countriesMapper;
 
     @Override
     public List<Map<String, Integer>> updateRecordSize2Country() {
-        List<Country> countries = resetCountries.getAll();
+        List<Country> countries = countriesMapper.getAll();
         if (null == countries || countries.size() <= 0) {
             return Lists.newArrayList();
         }

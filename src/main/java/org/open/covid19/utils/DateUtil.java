@@ -49,4 +49,24 @@ public class DateUtil {
         }
         return format;
     }
+
+    /**
+     * 格式化日期
+     * @param date
+     * @return
+     */
+    public static String local2tz(Date date) {
+        if (null == date) return "";
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(date);
+    }
+
+    /**
+     * 格式化日期：yyyy-MM-dd
+     * @param date
+     * @return
+     */
+    public static String local2yyyMMdd(Date date){
+        if (null == date) return "";
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
 }

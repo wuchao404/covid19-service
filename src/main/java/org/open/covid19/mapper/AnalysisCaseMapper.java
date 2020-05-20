@@ -42,4 +42,6 @@ public interface AnalysisCaseMapper {
      * @return
      */
     int updateRecordWithBeginEnd(List<Country> countryList);
+
+    List<Case> selectLessThanSizeRecords(int size);
 }

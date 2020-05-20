@@ -31,4 +31,9 @@
             </foreach>
         end;
     </update>
+    <select id="selectLessThanSizeRecords" parameterType="int" resultType="org.open.covid19.entity.Case">
+        select a.country_id as countryId, max(a.statistic_date) as date, b.slug, count(1) as size
+            from management.covid19_cases a, management.covid19_countries b
+            where a.country_id=b.id group by a.country_id having size &lt; #{size};
+    </select>
 </mapper>

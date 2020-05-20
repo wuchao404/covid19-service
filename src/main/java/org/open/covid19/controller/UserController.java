@@ -45,6 +45,11 @@ public class UserController {
         return new BaseResponse(200, "正在执行");
 
     }
+    @GetMapping("/casesFromDate")
+    public BaseResponse getCasesFromDate(){
+        analysisCasesService.insertRecordsFromDate();
+        return new BaseResponse(200, "正在执行");
+    }
     @GetMapping("/record")
     public BaseResponse AllRecords() {
         long start = System.currentTimeMillis();

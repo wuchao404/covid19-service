@@ -33,4 +33,18 @@ public class Helper {
             log.debug("数据插入成功：{}","countryId:" + countryId);
         }
     }
+
+    /**
+     * 异步插入确诊数
+     * @param countryId
+     */
+    @Async
+    public void insertCasesFromDate(long countryId, String slug, String fromDate) {
+        List<Case> cases = covid19Api.getCasesZFromDate(slug, fromDate);
+        log.debug("查询数量：{},国家：{},countryId:{}，fromDate：{}",cases.size(),slug,countryId,fromDate);
+        if (cases != null && cases.size() > 0) {
+            //入库
+            covid19ApiMapper.setCasesList2country(countryId,cases);
+        }
+    }
 }

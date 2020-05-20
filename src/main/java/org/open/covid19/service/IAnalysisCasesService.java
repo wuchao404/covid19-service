@@ -1,7 +1,5 @@
 package org.open.covid19.service;
 
-import org.open.covid19.entity.Case;
-
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +17,6 @@ public interface IAnalysisCasesService {
 
     int updateRecordOptimizer();
     int updateBeginEnd();
+
+    void insertRecordsFromDate();
 }

@@ -2,10 +2,12 @@ package org.open.covid19.service.impl;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.open.covid19.entity.Case;
 import org.open.covid19.entity.Country;
 import org.open.covid19.mapper.AnalysisCaseMapper;
 import org.open.covid19.mapper.CountriesMapper;
 import org.open.covid19.service.IAnalysisCasesService;
+import org.open.covid19.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ public class AnalysisCaseImpl implements IAnalysisCasesService{
     AnalysisCaseMapper analysisCaseMapper;
     @Autowired
     CountriesMapper countriesMapper;
+    @Autowired
+    Helper helper;
 
     @Override
     public List<Map<String, Integer>> updateRecordSize2Country() {
@@ -63,5 +67,22 @@ public class AnalysisCaseImpl implements IAnalysisCasesService{
                 analysisCaseMapper.updateRecordWithBeginEnd(allRecords) : 0;
         return result;
     }
+
+    /**
+     * 根据日期批量插入数据
+     */
+    @Override
+    public void insertRecordsFromDate() {
+        List<Case> records = analysisCaseMapper.selectLessThanSizeRecords(60);
+        if (null != records && records.size() > 0){
+            records.forEach(record ->{
+                helper.insertCasesFromDate(
+                        record.getCountryId(),
+                        record.getSlug(),
+                        DateUtil.local2tz(record.getDate()));
+            });
+        }
+    }
+
 
 }

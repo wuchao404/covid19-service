@@ -44,10 +44,10 @@ public class Helper {
      */
     @Async
     public void insertCasesFromDate(long countryId, String slug, String fromDate) {
-        String days = String.valueOf(DateUtil.howManyDaysFromNow(DateUtil.stringToDate(fromDate)));
-        JhuCase jhuCase = jhuApi.getLastDaysCasesByCountry(days, slug);
-        log.debug("jhuCase：{}",jhuCase.toString());
-        log.debug("查询数量：{},countryId:{}，fromDate：{}",slug,countryId,fromDate);
+//        String days = String.valueOf(DateUtil.howManyDaysFromNow(DateUtil.stringToDate(fromDate)));
+//        JhuCase jhuCase = jhuApi.getLastDaysCasesByCountry(days, slug);
+//        log.debug("jhuCase：{}",jhuCase.toString());
+//        log.debug("查询数量：{},countryId:{}，fromDate：{}",slug,countryId,fromDate);
 //        List<Case> cases = covid19Api.getCasesZFromDate(slug, fromDate);
 //        if (cases != null && cases.size() > 0) {
 //            //入库

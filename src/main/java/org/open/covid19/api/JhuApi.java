@@ -5,6 +5,7 @@ import org.open.covid19.api.fallback.JhuApiFallback;
 import org.open.covid19.entity.jhu.JhuCase;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @FeignClient(
         name = "jhuApi",
-        url = "http://corona.lmao.ninja",
+        url = "https://corona.lmao.ninja",
         fallbackFactory = JhuApiFallback.class
 )
 public interface JhuApi {
@@ -25,6 +26,7 @@ public interface JhuApi {
      * @return
      */
     @RequestMapping(method = RequestMethod.GET, value = "/v2/historical/{slug}?lastdays={lastDays}")
-    @Headers({"Host: http://corona.lmao.ninja"})
-    JhuCase getLastDaysCasesByCountry(@PathVariable String lastDays, @PathVariable String slug);
+    JhuCase getLastDaysCasesByCountry(@PathVariable String lastDays, @PathVariable String slug,
+                                      @RequestHeader(name="User-Agent") String userAgent
+                                      );
 }

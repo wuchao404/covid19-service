@@ -93,7 +93,8 @@ public class UserController {
     }
     @GetMapping("/test")
     public BaseResponse test(){
-        jhuApi.getLastDaysCasesByCountry("15","comoros");
+        jhuApi.getLastDaysCasesByCountry("15","comoros",
+                "Chrome/69.0.3497.81 Safari/537.36");
         return BaseResponse.SUCCESS;
     }
 }

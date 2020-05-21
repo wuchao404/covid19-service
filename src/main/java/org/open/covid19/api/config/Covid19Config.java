@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class Covid19Config {
     @Bean
     Level feignLoggerLevel(){
-        return Level.NONE;
+        return Level.FULL;
     }
 
 }

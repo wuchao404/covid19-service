@@ -23,16 +23,14 @@ feign:
         execution:
           isolation:
             strategy: SEMAPHORE
-#    threadpool:
-#      default:
-#        coreSize: 10 #并发执行的最大线程数，默认10
-#        maxQueueSize: 1000 #BlockingQueue的最大队列数，默认值-1
   client:
     config:
       default:
-        connectTimeout: 20000
-        readTimeout: 5000
-        loggerLevel: none
+        connectTimeout: 200000
+        readTimeout: 500000
+        loggerLevel: full
+    feignName:
+      connectTimeout: 50000
 
 
 

@@ -2,7 +2,9 @@ package org.open.covid19.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.Covid19Api;
+import org.open.covid19.api.JhuApi;
 import org.open.covid19.entity.Case;
+import org.open.covid19.entity.jhu.JhuCase;
 import org.open.covid19.mapper.Covid19ApiMapper;
 import org.open.covid19.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class Helper {
     private Covid19ApiMapper covid19ApiMapper;
     @Autowired
     private Covid19Api covid19Api;
+    @Autowired
+    JhuApi jhuApi;
 
     @Async
     public void insertCasesByIso2(String slug, boolean isFromDate) {
@@ -40,11 +44,16 @@ public class Helper {
      */
     @Async
     public void insertCasesFromDate(long countryId, String slug, String fromDate) {
-        List<Case> cases = covid19Api.getCasesZFromDate(slug, fromDate);
-        log.debug("查询数量：{},国家：{},countryId:{}，fromDate：{}",cases.size(),slug,countryId,fromDate);
-        if (cases != null && cases.size() > 0) {
-            //入库
-            covid19ApiMapper.setCasesList2country(countryId,cases);
-        }
+        String days = String.valueOf(DateUtil.howManyDaysFromNow(DateUtil.stringToDate(fromDate)));
+        JhuCase jhuCase = jhuApi.getLastDaysCasesByCountry(days, slug);
+        log.debug("jhuCase：{}",jhuCase.toString());
+        log.debug("查询数量：{},countryId:{}，fromDate：{}",slug,countryId,fromDate);
+//        List<Case> cases = covid19Api.getCasesZFromDate(slug, fromDate);
+//        if (cases != null && cases.size() > 0) {
+//            //入库
+//            covid19ApiMapper.setCasesList2country(countryId,cases);
+//
+//        }
     }
+
 }

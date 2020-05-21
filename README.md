@@ -1,3 +1,4 @@
+
 # covid19-service
 收集全球新冠肺炎数据，提供api接口支持
 - [产品原型文档](https://free.modao.cc/app/753744fc844134a644cfc7c6f689b8e146e4fd14?simulator_type=device&sticky)
@@ -18,3 +19,7 @@
 总检测人数    | totalTest       | 单位：人数
 每百万检测人数 | testPer1MPop    | 单位：人数
 死亡率        | deathRate      | 累计死亡/累计确诊, 单位：%,
+
+# 接口
+- 1.[美国50个州的信息](https://covidtracking.com/api/states/info)
+- 2.[约翰霍普金斯大学的接口](https://documenter.getpostman.com/view/11144369/Szf6Z9B3?version=latest#3213afbd-bd2e-4b5c-aeea-38e7a56161b2)

@@ -69,4 +69,39 @@ public class DateUtil {
         if (null == date) return "";
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
+
+    /**
+     * 指定日期距离现在几天,不足一天算为0。(取绝对值)。
+     * 例如：昨天0点到今天15点算1天
+     * @param date
+     * @return
+     */
+    public static int howManyDaysFromNow(Date date) {
+        if (null==date) return 0;
+        long current = System.currentTimeMillis();
+        long past = date.getTime();
+        long residue = Math.abs(current - past); // 绝对值
+        long days = residue / (1000 * 60 * 60 * 24);
+        System.out.println("days:" + days);
+        return (int) (residue / (1000 * 60 * 60 * 24));
+    }
+
+    /**
+     * 字符串转为Date类型
+     * @param dateStr
+     * @return
+     */
+    public static Date stringToDate(String dateStr) {
+        if(dateStr ==null || "".equals(dateStr)){
+            return null;
+        }
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = df.parse(dateStr);
+        } catch (ParseException e) {
+
+        }
+        return date;
+    }
 }

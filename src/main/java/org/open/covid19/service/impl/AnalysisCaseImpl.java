@@ -73,7 +73,7 @@ public class AnalysisCaseImpl implements IAnalysisCasesService{
      */
     @Override
     public void insertRecordsFromDate() {
-        List<Case> records = analysisCaseMapper.selectLessThanSizeRecords(60);
+        List<Case> records = analysisCaseMapper.selectLessThanSizeRecords(10);
         if (null != records && records.size() > 0){
             records.forEach(record ->{
                 helper.insertCasesFromDate(

@@ -2,6 +2,7 @@ package org.open.covid19.controller;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.open.covid19.api.JhuApi;
 import org.open.covid19.entity.UserEntity;
 import org.open.covid19.service.IAnalysisCasesService;
 import org.open.covid19.service.ICovid19ApiService;
@@ -32,6 +33,8 @@ public class UserController {
     private ICovid19ApiService iCovid19ApiService;
     @Autowired
     IAnalysisCasesService analysisCasesService;
+    @Autowired
+    JhuApi jhuApi;
 
 
     @GetMapping("/user")
@@ -86,6 +89,11 @@ public class UserController {
         File file = MultipartFileToFile.toFile(multipartFile);
         setCountries.readCnNameFromExcel(file);
         MultipartFileToFile.delteTempFile(file);
+        return BaseResponse.SUCCESS;
+    }
+    @GetMapping("/test")
+    public BaseResponse test(){
+        jhuApi.getLastDaysCasesByCountry("15","comoros");
         return BaseResponse.SUCCESS;
     }
 }

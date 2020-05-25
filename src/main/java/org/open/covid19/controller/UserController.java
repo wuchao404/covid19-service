@@ -3,7 +3,9 @@ package org.open.covid19.controller;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.JhuApi;
+import org.open.covid19.entity.Case;
 import org.open.covid19.entity.UserEntity;
+import org.open.covid19.entity.jhu.JhuCase;
 import org.open.covid19.service.IAnalysisCasesService;
 import org.open.covid19.service.ICovid19ApiService;
 import org.open.covid19.service.ISetCountries;
@@ -93,8 +95,9 @@ public class UserController {
     }
     @GetMapping("/test")
     public BaseResponse test(){
-        jhuApi.getLastDaysCasesByCountry("15","comoros",
-                "Chrome/69.0.3497.81 Safari/537.36");
-        return BaseResponse.SUCCESS;
+        JhuCase comoros = jhuApi.getLastDaysCasesByCountry("15", "comoros");
+        List<Case> cases = comoros.cast2List(15, "comoros");
+        log.debug("cases:{}", cases.toString());
+        return BaseResponse.success200(cases);
     }
 }

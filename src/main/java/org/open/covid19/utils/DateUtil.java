@@ -56,9 +56,29 @@ public class DateUtil {
      * @return
      */
     public static String local2tz(Date date) {
-        if (null == date) return "";
+        if (null == date) {
+            return "";
+        }
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(date);
     }
+
+    /**
+     * 格式化日期，例如从 M/d/yy 转为 yyyy-MM-dd
+     * @param dateStr       日期时间
+     * @param fromFormat    源格式
+     * @param toFormat      期望格式
+     * @return
+     */
+    public static String format(String dateStr, String fromFormat, String toFormat){
+        try {
+            Date date = new SimpleDateFormat(fromFormat).parse(dateStr);
+            return new SimpleDateFormat(toFormat).format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     /**
      * 格式化日期：yyyy-MM-dd
@@ -80,7 +100,8 @@ public class DateUtil {
         if (null==date) return 0;
         long current = System.currentTimeMillis();
         long past = date.getTime();
-        long residue = Math.abs(current - past); // 绝对值
+        // 绝对值
+        long residue = Math.abs(current - past);
         long days = residue / (1000 * 60 * 60 * 24);
         System.out.println("days:" + days);
         return (int) (residue / (1000 * 60 * 60 * 24));

@@ -28,7 +28,7 @@ feign:
       default:
         connectTimeout: 200000
         readTimeout: 500000
-        loggerLevel: full
+        loggerLevel: none
     feignName:
       connectTimeout: 50000
 

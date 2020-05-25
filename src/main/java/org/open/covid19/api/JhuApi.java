@@ -1,11 +1,9 @@
 package org.open.covid19.api;
 
-import feign.Headers;
 import org.open.covid19.api.fallback.JhuApiFallback;
 import org.open.covid19.entity.jhu.JhuCase;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,8 +23,6 @@ public interface JhuApi {
      * @param slug
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/v2/historical/{slug}?lastdays={lastDays}")
-    JhuCase getLastDaysCasesByCountry(@PathVariable String lastDays, @PathVariable String slug,
-                                      @RequestHeader(name="User-Agent") String userAgent
-                                      );
+    @RequestMapping(method = RequestMethod.GET, value = "/v2/historical/{slug}?lastdays={lastDays}",headers = {"User-Agent=xxx"})
+    JhuCase getLastDaysCasesByCountry(@PathVariable String lastDays, @PathVariable String slug );
 }

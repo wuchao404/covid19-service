@@ -55,6 +55,20 @@ public class Helper {
         if (cases != null && cases.size() > 0) {
             //入库
             covid19ApiMapper.setCasesList2country(countryId,cases);
-       }
+        }
+    }
+
+    /**
+     * 查询某国的所有数据，并入库
+     */
+    @Async
+    public void insertAllCaseOfCountry(long countryId, String slug) {
+        JhuCase jhuCase = jhuApi.getLastDaysCasesByCountry("90", slug);
+        List<Case> cases = jhuCase.cast2List(countryId, slug);
+        if (cases != null && cases.size() > 0) {
+            log.debug("查询数量：{},countryId:{}",cases.size(),countryId);
+            //入库
+            covid19ApiMapper.setCasesList2country(countryId,cases);
+        }
     }
 }

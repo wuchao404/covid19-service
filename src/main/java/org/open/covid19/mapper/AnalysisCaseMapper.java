@@ -43,5 +43,16 @@ public interface AnalysisCaseMapper {
      */
     int updateRecordWithBeginEnd(List<Country> countryList);
 
+    /**
+     * 小于size的国家和最后更新日期
+     * @param size
+     * @return
+     */
     List<Case> selectLessThanSizeRecords(int size);
+
+    /**
+     * 查询cases表中没有任何确诊记录的国家id列表
+     * @return
+     */
+    List<Country> selectIdsWhereNoRecord();
 }

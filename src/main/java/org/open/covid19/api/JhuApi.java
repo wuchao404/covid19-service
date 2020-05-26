@@ -25,4 +25,12 @@ public interface JhuApi {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/v2/historical/{slug}?lastdays={lastDays}",headers = {"User-Agent=xxx"})
     JhuCase getLastDaysCasesByCountry(@PathVariable String lastDays, @PathVariable String slug );
+
+    /**
+     * 查询该国所有数据
+     * @param slug
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/v2/historical/{slug}",headers = {"User-Agent=xxx"})
+    JhuCase getAllCaseByCountry(@PathVariable String slug);
 }

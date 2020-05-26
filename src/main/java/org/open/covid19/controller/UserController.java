@@ -93,10 +93,35 @@ public class UserController {
         MultipartFileToFile.delteTempFile(file);
         return BaseResponse.SUCCESS;
     }
+    /**
+     * 上传Excel文件，美国各州中英文对照
+     * @param multipartFile
+     * @return
+     */
+    @SneakyThrows
+    @PostMapping("/excel4usStates")
+    public BaseResponse uploadExcel4usStates(@RequestParam("file") MultipartFile multipartFile){
+        log.debug("接收文件:{}",multipartFile.getName());
+        File file = MultipartFileToFile.toFile(multipartFile);
+        setCountries.readAmericanStatesFromExcel(file);
+        MultipartFileToFile.delteTempFile(file);
+        return BaseResponse.SUCCESS;
+    }
+
+    /**
+     * 把缺少病例的国家数据补齐
+     * @return`
+     */
+    @GetMapping("/allIfNoExistInCases")
+    public BaseResponse insertRecordsIfNoExist(){
+        analysisCasesService.insertRecordsIfNoExist();
+        return BaseResponse.SUCCESS;
+    }
+
     @GetMapping("/test")
     public BaseResponse test(){
-        JhuCase comoros = jhuApi.getLastDaysCasesByCountry("15", "comoros");
-        List<Case> cases = comoros.cast2List(15, "comoros");
+        JhuCase comoros = jhuApi.getLastDaysCasesByCountry("90","china");
+        List<Case> cases = comoros.cast2List(169, "china");
         log.debug("cases:{}", cases.toString());
         return BaseResponse.success200(cases);
     }

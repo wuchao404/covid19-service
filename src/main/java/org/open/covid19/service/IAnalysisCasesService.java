@@ -18,5 +18,13 @@ public interface IAnalysisCasesService {
     int updateRecordOptimizer();
     int updateBeginEnd();
 
+    /**
+     * 从某个日期后开始插入确诊数据
+     */
     void insertRecordsFromDate();
+
+    /**
+     * 如果该国没有数据，则调用JHU接口，将确诊数据入库
+     */
+    void insertRecordsIfNoExist();
 }

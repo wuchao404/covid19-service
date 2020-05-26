@@ -6,7 +6,10 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import org.open.covid19.api.Covid19Api;
 import org.open.covid19.entity.Country;
 import org.open.covid19.entity.CountryExcel;
+import org.open.covid19.entity.jhu.ProvinceEntity;
 import org.open.covid19.files.CountryExcelDateListener;
+import org.open.covid19.utils.file.EasyExcelUtil;
+import org.open.covid19.files.ExcelDataListener;
 import org.open.covid19.mapper.CountriesMapper;
 import org.open.covid19.service.ISetCountries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +34,31 @@ public class SetCountriesImpl implements ISetCountries {
     @Override
     public void readCnNameFromExcel(File file) {
         CountryExcelDateListener listener = new CountryExcelDateListener(countriesMapper);
-//        EasyExcel.read(file.getName(),CountryExcel.class,listener).sheet().doRead();
         ExcelReader reader = EasyExcel.read(file, CountryExcel.class, listener).build();
         ReadSheet sheet = EasyExcel.readSheet(0).build();
         reader.read(sheet);
         reader.finish();
     }
+
+    /**
+     * excel，美国50个州
+     * @param file
+     */
+    @Override
+    public void readAmericanStatesFromExcel(File file) {
+        ExcelDataListener<ProvinceEntity> listener = new ExcelDataListener<>((list) -> {
+            if (null == list || list.size() <= 0){
+                return;
+            }
+            for (int i = 0; i < list.size(); i++) {
+                ProvinceEntity provinceEntity = list.get(i);
+                provinceEntity.setCountryId(15);// 美国
+                provinceEntity.setProvinceId(15,i+1);
+            }
+            countriesMapper.batchInsertAmericanState(list);
+        });
+        EasyExcelUtil.readSheet(file, ProvinceEntity.class,listener,0);
+    }
+
+
 }

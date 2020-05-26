@@ -26,4 +26,20 @@
                 </foreach>
             end;
     </update>
+
+    <insert id="batchInsertAmericanState" parameterType="list">
+        insert into covid19_province (country_id, province_id, abbr,province_name, province_cn_name,capital_name,capital_cn_name)
+            values
+            <foreach collection="list" item="item" index="index" separator=",">
+                <trim prefix="(" suffix=")" suffixOverrides=",">
+                    #{item.countryId},
+                    #{item.provinceId},
+                    #{item.abbr},
+                    #{item.provinceName},
+                    #{item.provinceCnName},
+                    #{item.capitalName},
+                    #{item.capitalCnName}
+                </trim>
+            </foreach>
+    </insert>
 </mapper>

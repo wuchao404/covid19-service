@@ -13,4 +13,10 @@ public interface ISetCountries {
      * 读取Excel
      */
     void readCnNameFromExcel(File file);
+
+    /**
+     * 读excel，获取美国50个州的信息
+     * @param file
+     */
+    void readAmericanStatesFromExcel(File file);
 }

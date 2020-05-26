@@ -36,4 +36,8 @@
             from management.covid19_cases a, management.covid19_countries b
             where a.country_id=b.id group by a.country_id having size &lt; #{size};
     </select>
+    <select id="selectIdsWhereNoRecord" resultType="org.open.covid19.entity.Country">
+        select country.id,country.slug from covid19_countries country left join covid19_cases case19
+            on country.id=case19.country_id where case19.country_id is null;
+    </select>
 </mapper>

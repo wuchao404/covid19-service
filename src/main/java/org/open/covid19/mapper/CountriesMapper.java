@@ -3,6 +3,7 @@ package org.open.covid19.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.open.covid19.entity.Country;
 import org.open.covid19.entity.CountryExcel;
+import org.open.covid19.entity.jhu.ProvinceEntity;
 
 import java.util.List;
 
@@ -30,4 +31,11 @@ public interface CountriesMapper {
      * @return
      */
     int updateCNName(List<CountryExcel> countryList);
+
+    /**
+     * 批量插入美国50个州
+     * @param list
+     * @return
+     */
+    int batchInsertAmericanState(List<ProvinceEntity> list);
 }

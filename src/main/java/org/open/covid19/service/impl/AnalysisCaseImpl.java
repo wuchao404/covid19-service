@@ -84,5 +84,20 @@ public class AnalysisCaseImpl implements IAnalysisCasesService{
         }
     }
 
+    /**
+     * 针对没有数据的国家，从JHU获取数据。
+     * jhu缺少64个国家的数据，不是很全
+     */
+    @Override
+    public void insertRecordsIfNoExist() {
+        // 哪些国家没有确诊数据
+        List<Country> countries = analysisCaseMapper.selectIdsWhereNoRecord();
+        log.debug("数量:{},哪些国家没有确诊数据:{}",countries.size(), countries.toString());
+        // 批量入库
+        countries.forEach(country -> {
+            helper.insertAllCaseOfCountry(country.getId(), country.getSlug());
+        });
+    }
+
 
 }

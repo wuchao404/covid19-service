@@ -26,4 +26,11 @@
     <select id="getGlobalCaseCount" resultType="long">
 
     </select>
+    <select id="selectProvinceIdByName" resultType="java.lang.Long" parameterType="map">
+        select province_id from management.covid19_province where country_id=#{countryId} and province_name=#{provinceName};
+    </select>
+
+    <select id="selectUsStates" resultType="org.open.covid19.entity.jhu.ProvinceEntity">
+        select * from management.covid19_province where country_id=15;
+    </select>
 </mapper>

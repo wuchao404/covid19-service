@@ -5,14 +5,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 日期工具
+ * @author wuchao
+ */
 public class DateUtil {
+    public static final String FORMAT_TZ = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    public static final String FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
+
     /**
      * `yyyy-MM-dd`格式转换为UTC时间
      * @param localTime
      * @return
      */
     public static Date localToUTC(String localTime) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_YYYY_MM_DD);
         Date localDate= null;
         try {
             localDate = sdf.parse(localTime);
@@ -42,8 +49,8 @@ public class DateUtil {
     public static String local2tz(String dateStr) {
         String format = "";
         try {
-            Date localDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-            format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(localDate);
+            Date localDate = new SimpleDateFormat(FORMAT_YYYY_MM_DD).parse(dateStr);
+            format = new SimpleDateFormat(FORMAT_TZ).format(localDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -59,7 +66,7 @@ public class DateUtil {
         if (null == date) {
             return "";
         }
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(date);
+        return new SimpleDateFormat(FORMAT_TZ).format(date);
     }
 
     /**

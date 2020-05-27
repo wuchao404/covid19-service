@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.open.covid19.entity.Case;
 import org.open.covid19.entity.Country;
+import org.open.covid19.entity.jhu.ProvinceEntity;
 
 import java.util.List;
 @Mapper
@@ -33,4 +34,17 @@ public interface Covid19ApiMapper {
      */
     long getGlobalCaseCount();
 
+    /**
+     * 查询省份id
+     * @param countryId     国家id
+     * @param provinceName  省份名称
+     * @return
+     */
+    long selectProvinceIdByName(@Param("countryId") long countryId, @Param("provinceName") String provinceName);
+
+    /**
+     * 查询美国所有州
+     * @return
+     */
+    List<ProvinceEntity> selectUsStates();
 }

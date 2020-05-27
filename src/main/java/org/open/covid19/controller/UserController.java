@@ -3,13 +3,10 @@ package org.open.covid19.controller;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.JhuApi;
-import org.open.covid19.entity.Case;
 import org.open.covid19.entity.UserEntity;
-import org.open.covid19.entity.jhu.JhuCase;
-import org.open.covid19.service.IAnalysisCasesService;
-import org.open.covid19.service.ICovid19ApiService;
-import org.open.covid19.service.ISetCountries;
-import org.open.covid19.service.IUserService;
+import org.open.covid19.entity.jhu.ProvinceEntity;
+import org.open.covid19.mapper.Covid19ApiMapper;
+import org.open.covid19.service.*;
 import org.open.covid19.utils.BaseResponse;
 import org.open.covid19.utils.file.MultipartFileToFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,10 @@ public class UserController {
     IAnalysisCasesService analysisCasesService;
     @Autowired
     JhuApi jhuApi;
+    @Autowired
+    Covid19ApiMapper covid19ApiMapper;
+    @Autowired
+    IApifyService iApifyService;
 
 
     @GetMapping("/user")
@@ -117,12 +118,19 @@ public class UserController {
         analysisCasesService.insertRecordsIfNoExist();
         return BaseResponse.SUCCESS;
     }
+    /**
+     * 插入美国各州历史数据
+     * @return`
+     */
+    @GetMapping("/allAmericanStateCase")
+    public BaseResponse insertAllAmericanStateCase(){
+        iApifyService.insertAllAmericanStatesCase();
+        return BaseResponse.SUCCESS;
+    }
 
     @GetMapping("/test")
     public BaseResponse test(){
-        JhuCase comoros = jhuApi.getLastDaysCasesByCountry("90","china");
-        List<Case> cases = comoros.cast2List(169, "china");
-        log.debug("cases:{}", cases.toString());
-        return BaseResponse.success200(cases);
+        List<ProvinceEntity> states = covid19ApiMapper.selectUsStates();
+        return BaseResponse.success200(states);
     }
 }

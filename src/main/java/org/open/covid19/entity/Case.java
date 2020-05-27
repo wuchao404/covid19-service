@@ -30,5 +30,6 @@ public class Case {
     private Date date;
 
     private long countryId;
+    private long provinceId;
 
 }

@@ -2,9 +2,9 @@ package org.open.covid19.controller;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.open.covid19.api.ApifyApi;
 import org.open.covid19.api.JhuApi;
 import org.open.covid19.entity.UserEntity;
-import org.open.covid19.entity.jhu.ProvinceEntity;
 import org.open.covid19.mapper.Covid19ApiMapper;
 import org.open.covid19.service.*;
 import org.open.covid19.utils.BaseResponse;
@@ -34,6 +34,8 @@ public class UserController {
     IAnalysisCasesService analysisCasesService;
     @Autowired
     JhuApi jhuApi;
+    @Autowired
+    ApifyApi apifyApi;
     @Autowired
     Covid19ApiMapper covid19ApiMapper;
     @Autowired
@@ -124,13 +126,18 @@ public class UserController {
      */
     @GetMapping("/allAmericanStateCase")
     public BaseResponse insertAllAmericanStateCase(){
-        iApifyService.insertAllAmericanStatesCase();
-        return BaseResponse.SUCCESS;
+        iApifyService.insertAllAmericanStatesCase();        return BaseResponse.SUCCESS;
     }
 
-    @GetMapping("/test")
-    public BaseResponse test(){
-        List<ProvinceEntity> states = covid19ApiMapper.selectUsStates();
-        return BaseResponse.success200(states);
+    @GetMapping("/test1")
+    public BaseResponse test1(){
+        Object lastCases = apifyApi.getLastCases();
+        return BaseResponse.success200(lastCases);
+    }
+
+    @GetMapping("/tes2")
+    public BaseResponse test2(){
+        Object lastCases = apifyApi.getAllAmericanStateCases();
+        return BaseResponse.success200(lastCases);
     }
 }

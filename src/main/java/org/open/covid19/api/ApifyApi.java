@@ -22,4 +22,7 @@ public interface ApifyApi {
      */
     @RequestMapping(method = RequestMethod.GET,value = "/v2/datasets/FIbyK6uHUntt2kNy3/items?format=json&clean=1")
     List<AmericanCase> getAllAmericanStateCases();
+
+    @RequestMapping(method = RequestMethod.GET,value = "/v2/key-value-stores/moxA3Q0aZh5LosewB/records/LATEST?disableRedirect=true")
+    Object getLastCases();
 }

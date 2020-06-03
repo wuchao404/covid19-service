@@ -7,6 +7,7 @@ import org.open.covid19.api.JhuApi;
 import org.open.covid19.entity.UserEntity;
 import org.open.covid19.mapper.Covid19ApiMapper;
 import org.open.covid19.service.*;
+import org.open.covid19.service.impl.LoggerApply;
 import org.open.covid19.utils.BaseResponse;
 import org.open.covid19.utils.file.MultipartFileToFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,8 @@ public class UserController {
     Covid19ApiMapper covid19ApiMapper;
     @Autowired
     IApifyService iApifyService;
-
+    @Autowired
+    LoggerApply loggerApply;
 
     @GetMapping("/user")
     public BaseResponse getUser(@RequestParam(value = "username", defaultValue = "yangshuai") String username) {
@@ -135,9 +137,9 @@ public class UserController {
         return BaseResponse.success200(lastCases);
     }
 
-    @GetMapping("/tes2")
+    @GetMapping("/get")
     public BaseResponse test2(){
-        Object lastCases = apifyApi.getAllAmericanStateCases();
-        return BaseResponse.success200(lastCases);
+        loggerApply.requestLastAmericanCases();
+        return BaseResponse.SUCCESS;
     }
 }

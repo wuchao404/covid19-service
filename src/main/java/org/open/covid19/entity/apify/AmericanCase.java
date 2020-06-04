@@ -1,5 +1,6 @@
 package org.open.covid19.entity.apify;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -11,21 +12,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 美国各州确诊数据
+ * 美国各州确诊数据.使用`JsonIgnoreProperties`忽略位置参数
  * @author wuchao
  */
 @Data
 @Slf4j
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AmericanCase {
     @JsonProperty("lastUpdatedAtApify")
     private String lastUpdatedAtApify;
     @JsonProperty("lastUpdatedAtSource")
     private String lastUpdatedAtSource;
     @JsonProperty("totalCases")
-    private String totalCases;
+    private Integer totalCases;
     @JsonProperty("totalDeaths")
-    private String totalDeaths;
-    @JsonProperty("casesByStates")
+    private Integer totalDeaths;
+    @JsonProperty("casesByState")
     private List<CasesByState> casesByStates;
     /**
      * 转换后的实体
@@ -33,7 +35,9 @@ public class AmericanCase {
     private List<Case> cases;
 
     @Data
-    public class CasesByState{
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class CasesByState{
+        public CasesByState(){}
         @JsonProperty("casesReported")
         private Integer casesReported;
         @JsonProperty("communityTransmission")
@@ -45,11 +49,11 @@ public class AmericanCase {
     }
 
     public String getLastUpdatedAtApify() {
-        return DateUtil.format(lastUpdatedAtApify,DateUtil.FORMAT_TZ, DateUtil.FORMAT_YYYY_MM_DD);
+        return DateUtil.format(lastUpdatedAtApify,DateUtil.FORMAT_TZ000, DateUtil.FORMAT_YYYY_MM_DD);
     }
 
     public String getLastUpdatedAtSource() {
-        return DateUtil.format(lastUpdatedAtSource,DateUtil.FORMAT_TZ, DateUtil.FORMAT_YYYY_MM_DD);
+        return DateUtil.format(lastUpdatedAtSource,DateUtil.FORMAT_TZ000, DateUtil.FORMAT_YYYY_MM_DD);
     }
 
     /**

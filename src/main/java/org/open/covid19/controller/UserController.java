@@ -3,8 +3,10 @@ package org.open.covid19.controller;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.ApifyApi;
+import org.open.covid19.api.ApifySupplement;
 import org.open.covid19.api.JhuApi;
 import org.open.covid19.entity.UserEntity;
+import org.open.covid19.entity.apify.AmericanCase;
 import org.open.covid19.mapper.Covid19ApiMapper;
 import org.open.covid19.service.*;
 import org.open.covid19.service.impl.LoggerApply;
@@ -43,6 +45,8 @@ public class UserController {
     IApifyService iApifyService;
     @Autowired
     LoggerApply loggerApply;
+    @Autowired
+    ApifySupplement apifySupplement;
 
     @GetMapping("/user")
     public BaseResponse getUser(@RequestParam(value = "username", defaultValue = "yangshuai") String username) {
@@ -131,15 +135,15 @@ public class UserController {
         iApifyService.insertAllAmericanStatesCase();        return BaseResponse.SUCCESS;
     }
 
-    @GetMapping("/test1")
+    @GetMapping("/test")
     public BaseResponse test1(){
-        Object lastCases = apifyApi.getLastCases();
-        return BaseResponse.success200(lastCases);
+        AmericanCase americanCase = apifySupplement.requestAllAmericanCases();
+        return BaseResponse.success200(americanCase);
     }
 
     @GetMapping("/get")
     public BaseResponse test2(){
-        loggerApply.requestLastAmericanCases();
-        return BaseResponse.SUCCESS;
+        String s = loggerApply.requestLastAmericanCases("1", "2");
+        return BaseResponse.success200(s);
     }
 }

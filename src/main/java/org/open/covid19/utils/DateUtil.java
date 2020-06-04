@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class DateUtil {
     public static final String FORMAT_TZ = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    public static final String FORMAT_TZ000 = "yyyy-MM-dd'T'HH:mm:ss.000'Z'";
     public static final String FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
 
     /**

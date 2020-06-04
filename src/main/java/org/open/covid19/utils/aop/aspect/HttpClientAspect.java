@@ -19,20 +19,6 @@ public class HttpClientAspect {
     private void cutMethod(){}
 
 
-
-
-    @Before("cutMethod()")
-    public void before(){
-        System.out.println("before开始");
-    }
-    @After("cutMethod()")
-    public void after(){
-        System.out.println("after结束");
-    }
-    @AfterReturning("cutMethod()")
-    public void afterReturn(){
-        System.out.println("afterReturning,正常结束");
-    }
     @AfterThrowing("cutMethod()")
     public void afterThrow(){
         System.out.println("afterThrowing,异常结束");
@@ -40,13 +26,11 @@ public class HttpClientAspect {
     @SneakyThrows
     @Around("cutMethod()")
     public Object around(ProceedingJoinPoint joinPoint){
-        Object[] args = joinPoint.getArgs();
-        System.out.println("args:" + args.toString());
         HttpRequestMapping httpRequestMapping = getAnnotation(joinPoint);
         String value = httpRequestMapping.value();
         String method = httpRequestMapping.method();
         String result = HttpClientUtils.sendHttpGet(value);
-        System.out.println("请求完成");
+
         return joinPoint.proceed(Arrays.asList(result).toArray());
     }
 

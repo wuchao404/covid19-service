@@ -1,10 +1,12 @@
 package org.open.covid19.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.utils.aop.annotation.Lingyejun;
 import org.open.covid19.utils.aop.annotation.HttpRequestMapping;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class LoggerApply {
 
     @Lingyejun(module = "http://www.cnblogs.com/lingyejun/")
@@ -21,8 +23,11 @@ public class LoggerApply {
     /**
      * execution指定某一个方法
      */
-    public void requestLastAmericanCases(){
-        System.out.println("执行了");
+    public String requestLastAmericanCases(String result1, String result2){
+        log.debug("result1:{},result2:{}",result1,result2);
+        return "源方法（requestLastAmericanCases）";
     }
+
+
 
 }

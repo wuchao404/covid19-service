@@ -1,8 +1,11 @@
 package org.open.covid19.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.open.covid19.api.ApifyApi;
-import org.open.covid19.entity.Case;
+import org.open.covid19.api.ApifySupplement;
 import org.open.covid19.entity.apify.AmericanCase;
 import org.open.covid19.entity.jhu.ProvinceEntity;
 import org.open.covid19.mapper.Covid19ApiMapper;
@@ -19,30 +22,36 @@ public class ApifyServiceImpl implements IApifyService {
     @Autowired
     ApifyApi apifyApi;
     @Autowired
+    ApifySupplement apifySupplement;
+    @Autowired
     Covid19ApiMapper covid19ApiMapper;
+    @Autowired
+    ObjectMapper objectMapper;
 
     /**
      * 插入美国所有州的数据
      */
+    @SneakyThrows
     @Override
-    public void insertAllAmericanStatesCase() {
-        List<AmericanCase> americanCases = apifyApi.getAllAmericanStateCases();
+    public List<AmericanCase> insertAllAmericanStatesCase() {
+        String result = apifySupplement.requestAllCase();
+        List<AmericanCase> americanCases = objectMapper.readValue(result, new TypeReference<List<AmericanCase>>() {});
         Map<String, Long> map = getUSProvinceIdMap();
         if (null != americanCases && americanCases.size() > 0) {
             log.debug("americanCases数量：{}",americanCases.size());
             americanCases.forEach(americanCase -> {
-                List<Case> cases = americanCase.cast2List(map,15);
-                americanCase.setCases(cases);
+                americanCase.cast2List(map,15);
+                americanCase.setCasesByStates(null);
             });
         }
-
+        return americanCases;
     }
 
     /**
      * 把省份数组转换为map集合，key为省份名称，value为省份id
      * @return
      */
-    private Map<String,Long> getUSProvinceIdMap(){
+    public Map<String,Long> getUSProvinceIdMap(){
         List<ProvinceEntity> provinceList = covid19ApiMapper.selectUsStates();
         Map<String,Long> map = new HashMap<>(10);
         if (null != provinceList && provinceList.size() > 0) {

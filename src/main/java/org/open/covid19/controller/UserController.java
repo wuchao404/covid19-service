@@ -9,6 +9,7 @@ import org.open.covid19.entity.UserEntity;
 import org.open.covid19.entity.apify.AmericanCase;
 import org.open.covid19.mapper.Covid19ApiMapper;
 import org.open.covid19.service.*;
+import org.open.covid19.service.impl.ApifyServiceImpl;
 import org.open.covid19.service.impl.LoggerApply;
 import org.open.covid19.utils.BaseResponse;
 import org.open.covid19.utils.file.MultipartFileToFile;
@@ -132,18 +133,22 @@ public class UserController {
      */
     @GetMapping("/allAmericanStateCase")
     public BaseResponse insertAllAmericanStateCase(){
-        iApifyService.insertAllAmericanStatesCase();        return BaseResponse.SUCCESS;
+        List<AmericanCase> americanCases = iApifyService.insertAllAmericanStatesCase();
+        return BaseResponse.success200(americanCases);
     }
 
     @GetMapping("/test")
     public BaseResponse test1(){
-        AmericanCase americanCase = apifySupplement.requestAllAmericanCases();
-        return BaseResponse.success200(americanCase);
+        Map<String, Long> map = ((ApifyServiceImpl) iApifyService).getUSProvinceIdMap();
+        Long id1 = map.get("American Samoa");
+        Long id2 = map.getOrDefault("American Samoa",0L);
+        Long[] ids = {id1,id2};
+        return BaseResponse.success200(ids);
     }
 
     @GetMapping("/get")
     public BaseResponse test2(){
-        String s = loggerApply.requestLastAmericanCases("1", "2");
-        return BaseResponse.success200(s);
+        AmericanCase americanCase = apifySupplement.requestLastAmericanCases();
+        return BaseResponse.success200(americanCase);
     }
 }

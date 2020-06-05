@@ -9,7 +9,8 @@ spring:
     default-property-inclusion: non_empty
 mybatis:
   mapperLocations: classpath*:mapper/*.xml
-
+  configuration:
+    map-underscore-to-camel-case: true # 下划线转驼峰
 
 logging:
   config: classpath:logback.xml

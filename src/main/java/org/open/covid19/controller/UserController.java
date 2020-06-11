@@ -133,8 +133,8 @@ public class UserController {
      */
     @GetMapping("/allAmericanStateCase")
     public BaseResponse insertAllAmericanStateCase(){
-        List<AmericanCase> americanCases = iApifyService.insertAllAmericanStatesCase();
-        return BaseResponse.success200(americanCases);
+        iApifyService.insertAllAmericanStatesCase();
+        return BaseResponse.SUCCESS;
     }
 
     @GetMapping("/test")

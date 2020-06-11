@@ -19,6 +19,22 @@
             </trim>
         </foreach>
     </insert>
+<!--    批量insert-->
+    <insert id="batchInsertCaseList" parameterType="list">
+        insert into management.covid19_cases (
+        total_cases,total_death,total_recovered,country_id,province_id,statistic_date
+        ) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.totalCase},
+                #{item.totalDeath},
+                #{item.totalRecovered},
+                #{item.countryId},
+                #{item.provinceId},
+                #{item.date}
+            </trim>
+        </foreach>
+    </insert>
     <!--获取国家列表-->
     <select id="getCountryList" resultType="org.open.covid19.entity.Country">
         select * from management.covid19_countries

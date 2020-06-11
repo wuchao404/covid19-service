@@ -17,6 +17,13 @@ public interface Covid19ApiMapper {
     int setCasesList2country(@Param("countryId") long countryId,@Param("cases") List<Case> cases);
 
     /**
+     * 批量插入疫情数据
+     * @param cases
+     * @return
+     */
+    int batchInsertCaseList(List<Case> cases);
+
+    /**
      * 根据简称查询id
      * @param slug
      * @return
@@ -47,4 +54,5 @@ public interface Covid19ApiMapper {
      * @return
      */
     List<ProvinceEntity> selectUsStates();
+
 }

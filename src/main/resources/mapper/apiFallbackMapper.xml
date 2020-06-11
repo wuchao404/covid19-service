@@ -5,10 +5,10 @@
         insert into management.api_fallback (type, message) values (#{type}, #{message});
     </insert>
     <insert id="batchInsertErrorList" parameterType="list">
+        insert into management.api_fallback (type,type_desc,message)
+        values
         <foreach collection="list" item="item" index="index" separator=",">
-            insert into management.api_fallback (type,type_desc,message)
-            values
-            <trim prefix="(" suffixOverrides=")" prefixOverrides=",">
+            <trim prefix="(" suffix=")" prefixOverrides=",">
                 #{item.type},
                 #{item.typeDesc},
                 #{item.message}

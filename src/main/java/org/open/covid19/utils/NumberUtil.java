@@ -15,7 +15,7 @@ public class NumberUtil {
         try {
             number = Integer.parseInt(num);
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return number;
     }

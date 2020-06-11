@@ -38,11 +38,11 @@ public class AmericanCase {
     /**
      * 转换后的实体
      */
-    private List<Case> cases;
+    private List<Case> cases = new ArrayList<>();
     /**
      * 错误信息，转换过程中有些数据不符合规范，这些数据要记录到库中
      */
-    private List<FallbackEntity> fallbackEntities;
+    private List<FallbackEntity> fallbackEntities = new ArrayList<>();
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -71,11 +71,18 @@ public class AmericanCase {
      * @return
      */
     public void cast2List(Map<String, Long> map,long countryId){
+        // 国家总疫情
+        Case countryCase = new Case();
+        countryCase.setCountryId(countryId);
+        countryCase.setProvinceId(-1);
+        countryCase.setTotalCase(totalCases);
+        countryCase.setTotalDeath(totalDeaths);
+        countryCase.setDate(DateUtil.stringToDate(lastUpdatedAtApify));
+        cases.add(countryCase);
+        //各州疫情
         if (null == casesByStates || casesByStates.size() <= 0 || null == map) {
             return;
         }
-        cases = new ArrayList<>();
-        fallbackEntities = new ArrayList<>();
         casesByStates.forEach(casesByState -> {
             String name = casesByState.getName();
             long provinceId = map.getOrDefault(name,0L);
@@ -109,7 +116,6 @@ public class AmericanCase {
         entity.setTypeDesc("美国各州疫情信息");
         entity.setMessage(new ObjectMapper().writeValueAsString(beanMap));
         new ObjectMapper().writeValueAsString(entity);
-        entity.insertIntoDb();
         return entity;
     }
 }

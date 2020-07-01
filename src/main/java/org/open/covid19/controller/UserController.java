@@ -48,6 +48,8 @@ public class UserController {
     LoggerApply loggerApply;
     @Autowired
     ApifySupplement apifySupplement;
+    @Autowired
+    IGdpService iGdpService;
 
     @GetMapping("/user")
     public BaseResponse getUser(@RequestParam(value = "username", defaultValue = "yangshuai") String username) {
@@ -114,6 +116,20 @@ public class UserController {
         log.debug("接收文件:{}",multipartFile.getName());
         File file = MultipartFileToFile.toFile(multipartFile);
         setCountries.readAmericanStatesFromExcel(file);
+        MultipartFileToFile.delteTempFile(file);
+        return BaseResponse.SUCCESS;
+    }
+    /**
+     * 上传Excel文件，中国各省gdp
+     * @param multipartFile
+     * @return
+     */
+    @SneakyThrows
+    @PostMapping("/provinceGdpExcel")
+    public BaseResponse provinceGdpExcel(@RequestParam("file") MultipartFile multipartFile){
+        log.debug("接收文件:{}",multipartFile.getName());
+        File file = MultipartFileToFile.toFile(multipartFile);
+        iGdpService.importProvinceGdpFromExcel(file);
         MultipartFileToFile.delteTempFile(file);
         return BaseResponse.SUCCESS;
     }

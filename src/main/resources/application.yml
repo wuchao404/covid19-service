@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:mysql://123.206.72.106:3306/management?characterEncoding=utf-8
+    url: jdbc:mysql://123.206.72.106:3306/hacker_rank_company?characterEncoding=utf-8
     username: admin
     password: 123456
   jackson:

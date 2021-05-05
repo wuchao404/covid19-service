@@ -14,7 +14,7 @@
         </commentGenerator>
         <!--jdbc的数据库连接 wg_insert 为数据库名字-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://123.206.72.106:3306/management?characterEncoding=utf-8"
+                        connectionURL="jdbc:mysql://123.206.72.106:3306/hacker_rank_company?characterEncoding=utf-8"
                         userId="admin"
                         password="123456">
 
@@ -28,7 +28,7 @@
         </javaTypeResolver>
         <!-- targetPackage：生成的实体类所在的包 -->
         <!-- targetProject：生成的实体类所在的硬盘位置 -->
-        <javaModelGenerator targetPackage="org.open.covid19.entity"
+        <javaModelGenerator targetPackage="org.open.covid19.entity.hackerRank.company"
                             targetProject="src/main/java">
             <!-- 是否允许子包 -->
             <property name="enableSubPackages" value="false"/>
@@ -40,25 +40,25 @@
             <property name="immutable" value="false"/>
         </javaModelGenerator>
         <!-- targetPackage 和 targetProject：生成的 mapper 文件的包和位置 -->
-        <sqlMapGenerator targetPackage="mapper"
-                         targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="company"
+                         targetProject="src/main/resources/mapper/hackerRank">
             <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
         <!-- targetPackage 和 targetProject：生成的 interface 文件的包和位置 -->
         <javaClientGenerator
                 type="XMLMAPPER"
-                targetPackage="org.open.covid19.mapper"
+                targetPackage="org.open.covid19.mapper.hackerRank.company"
                 targetProject="src/main/java">
             <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- tableName是数据库中的表名，domainObjectName是生成的JAVA模型名，后面的参数不用改，要生成更多的表就在下面继续加table标签 -->
-        <table tableName="gdp_province"
-               domainObjectName="GdpProvinceEntity"
-               mapperName="GdpProvinceMapper"
+        <table tableName="lead_manager"
+               domainObjectName="CompanyEntity"
+               mapperName="CompanyMapper"
                enableInsert="false"
-               enableSelectByPrimaryKey="true"
+               enableSelectByPrimaryKey="false"
                enableDeleteByPrimaryKey="false"
                selectByPrimaryKeyQueryId="true"
                enableUpdateByPrimaryKey="false"
